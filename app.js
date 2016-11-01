@@ -5,18 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-/*var db = 'mongodb://localhost/Blog';
-mongoose.connect(db);*/
-var db = mongoose.connection;
+var db = 'mongodb://localhost/Blog';
+mongoose.connect(db);
+/*var db = mongoose.connection;
 db.on('error',function(){ 
   console.log("abcd");
 });
 db.once('open', function() {
   // we're connected!
   console.log("connected");
-});
+});*/
 
 var Post = require('./models/post');
+
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

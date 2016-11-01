@@ -6,7 +6,8 @@ var Post = mongoose.model('Post');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	Post.find(function(err,posts,count){
+	Post.find({},function(err,posts){
+		if(err) throw err;
 		res.render('index', {
 			title : 'Express',
 			posts : posts
@@ -19,15 +20,28 @@ router.get('/create', function(req, res, next) {
   res.render('postform', { title: 'Express' });
 });
 
-router.post('/create', function(req,res){
+/*router.post('/create', function(req,res){
 	new Post({
 		post_title : req.body.post_title,
-		post_content : req.body.pot_content,
+		post_content : req.body.post_content,
 		updated_at : Date.now()
 	}).save(function(err, post , count){
 		console.log(mongoose.connection.readyState);
 		res.redirect('/');
 	});
-});
+});*/
+
+router.post('/create',function(req,res){
+	var npost = new Post({
+		post_title : req.body.post_title,
+		post_content : req.body.post_content,
+		updated_at : Date.now()
+	});
+	npost.save(function(err,npost){
+		if(err) return console.error(err);
+		else console.log('saved');
+		res.redirect('/');
+	})
+})
 
 module.exports = router;

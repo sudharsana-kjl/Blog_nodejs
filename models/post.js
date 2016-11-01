@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-	post_title: {type: String, required:true},
-	post_detail: {type: String, required:true},
-	updated_at: {type: Date, default: Date.now}
+	post_title: String,
+	post_content: String,
+	updated_at: Date
 
 });
 
@@ -13,4 +13,3 @@ module.exports = mongoose.model('Post',schema);
 
 
 
-var mongoose = require('mongoose');
