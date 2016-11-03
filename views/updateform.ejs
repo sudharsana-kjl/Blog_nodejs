@@ -8,27 +8,12 @@
   <body>
   	<% include partials/header %>
     <h1><%= title %></h1>
-   
     <br>
-<div class="container">
-
-<% posts.forEach( function(post){ %>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><%= post.post_title %></h3>
-  </div>
-  <div class="panel-body">
-    <p><%= post.post_content %></p>
-  </div>
-</div>
-<a href="/update/<%= post._id %>">Update</a>
-<a href="/delete/<%= post._id %>">Delete</a>
-
-<% }); %>
-
-
-
-
+    <form action="/update/<%= post._id %>" method="post" accept-charset="utf-8">
+      <input type="text" name="post_title" value="<%= post.post_title %> "/>
+      <input type="text" name="post_content" value="<%= post.post_content %>" />
+      <input type="submit">
+    </form>
 
     <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

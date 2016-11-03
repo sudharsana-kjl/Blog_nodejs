@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 	Post.find({},function(err,posts){
 		if(err) throw err;
 		res.render('index', {
-			title : 'Express',
+			title : 'Bulletin Board',
 			posts : posts
 			});
 	});
@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/create', function(req, res, next) {
-  res.render('postform', { title: 'Express' });
+  res.render('postform', { title: 'New Post' });
 });
 
 /*router.post('/create', function(req,res){
@@ -41,7 +41,64 @@ router.post('/create',function(req,res){
 		if(err) return console.error(err);
 		else console.log('saved');
 		res.redirect('/');
-	})
-})
+	});
+});
+
+router.post('/update/:id',function(req,res){
+	Post.findOneAndUpdate({ _id:req.params.id},
+	{ $set: 
+		{
+			post_title : req.body.post_title,
+			post_content : req.body.post_content,
+			updated_at : Date.now()
+		} 
+	},{ upsert: true}, function(err, p) {
+
+		if (err)
+			console.log("error while updating..");    //return next(new Error('Could not load Document'));
+ 		else 
+  			console.log("successfully updated");
+  	      res.redirect('/');
+         
+});
+
+});
+    // do your updates here
+    
+    	//p._id = req.params.id;
+		/*p.post_title = req.body.post_title;
+		p.post_content = req.body.post_content;
+		p.updated_at = Date.now();
+	
+
+    p.update(function(err) {
+      if (err)
+        console.log('error')
+      else
+        console.log('successfully updated')
+    });
+  }
+	});
+});*/
+
+router.get('/update/:id',function(req,res){
+	Post.findById(req.params.id,function(err,p){
+		if(!p)
+			console.log("Modified doc couldn't be saved");
+		else res.render('updateform', {
+			title : 'Express',
+			post : p
+			});
+	});
+});
+
+router.get('/delete/:id',function(req,res){
+	Post.findOneAndRemove({ _id:req.params.id},function(err,p){
+		if(err)
+			console.log("Error while deleting..");
+		else console.log("deleted");
+		res.redirect('/');
+	});
+});
 
 module.exports = router;
